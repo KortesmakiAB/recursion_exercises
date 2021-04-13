@@ -101,9 +101,52 @@ function gatherStrings(obj, returnArr = []) {
 /** binarySearch: given a sorted array of numbers, and a value,
  * return the index of that value (or -1 if val is not present). */
 
-function binarySearch(arr, val) {
+function binarySearch(arr, val, leftIdx = 0, rightIdx = arr.length - 1) {
 
+  function getMidIdx(){
+    return Math.floor((rightIdx + leftIdx) / 2);
+  }
+  let midIdx = getMidIdx();
+
+  // base case
+  if (leftIdx > rightIdx) return -1;
+
+  if (arr[midIdx] === val) return midIdx;
+  else if (arr[midIdx > val]) {
+    rightIdx = midIdx - 1;
+    midIdx = getMidIdx();
+    return binarySearch(arr, val, leftIdx, rightIdx);
+  }
+  else {
+    leftIdx = midIdx + 1;
+    midIdx = getMidIdx();
+    return binarySearch(arr, val, leftIdx, rightIdx);
+  }
 }
+
+// function binarySearch(arr, val) {
+//   let leftIdx = 0;
+//   let rightIdx = arr.length - 1;
+
+//   function getMidIdx(){
+//     return Math.floor((rightIdx + leftIdx) / 2);
+//   }
+//   let midIdx = getMidIdx();
+
+//   while (leftIdx <= rightIdx){
+//     if (arr[midIdx] === val) return midIdx;
+//     else if (arr[midIdx] > val){
+//       rightIdx = midIdx - 1;
+//       midIdx = getMidIdx();
+//     }
+//     else {
+//       leftIdx = midIdx + 1;
+//       midIdx = getMidIdx();
+//     }
+//   }
+
+//   return -1;
+// }
 
 module.exports = {
   product,
